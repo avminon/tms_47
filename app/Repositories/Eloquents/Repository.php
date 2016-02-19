@@ -48,4 +48,9 @@ abstract class Repository implements RepositoryInterface
     {
         return $this->findOrFail($id)->delete();
     }
+
+    public function paginate($numberOfPages, $columns = ['*'], $pageNumber = 'page')
+    {
+        return $this->model->paginate($numberOfPages, $columns, $pageNumber);
+    }
 }

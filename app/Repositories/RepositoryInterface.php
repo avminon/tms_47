@@ -13,4 +13,6 @@ interface RepositoryInterface
     public function update($id, $data);
 
     public function delete($id);
+    
+    public function paginate($numberOfPages, $columns = ['*'], $pageNumber = 'page');
 }
