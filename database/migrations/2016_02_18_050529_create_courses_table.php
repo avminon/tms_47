@@ -1,21 +1,23 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateActivitiesTable extends Migration
+class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
     public function up()
     {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
-            $table->string('description');
+            $table->string('name');
+            $table->text('description');
+            $table->tinyInteger('status');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +30,6 @@ class CreateActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activities');
+        Schema::drop('courses');
     }
 }

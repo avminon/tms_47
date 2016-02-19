@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateActivitiesTable extends Migration
+class CreateCourseSubjects extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('course_subjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
-            $table->string('description');
+            $table->integer('course_id')->index();
+            $table->integer('subject_id')->index();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +28,6 @@ class CreateActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activities');
+        Schema::drop('course_subjects');
     }
 }
