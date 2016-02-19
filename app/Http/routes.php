@@ -43,6 +43,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['namespace' => 'Supervisor'], function () {
             Route::get('supervisor/home', 'HomeController@index');
             Route::resource('supervisor/courses', 'CourseController');
+            Route::resource('supervisor/subjects', 'SubjectController');
         });
 
         Route::group(['namespace' => 'Trainee'], function () {
