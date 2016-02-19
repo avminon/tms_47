@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'save' => 'Save',
+    'delete' => 'Delete',
+    'cancel' => 'Cancel',
+    'update' => 'Update',
+    'finish' => 'Finish',
+    'instruction' => 'Instruction',
+    'start_date' => 'Start Date :',
+    'end_date' => 'End Date :',
+    'status' => 'Status :',
+    'toggle' => 'Toggle Navigation',
+    'name' => 'Name',
+    'pass' => 'Password',
+    'supervisor' => 'Supervisor',
+    'trainee' => 'Trainee ',
+    'create_user' => 'Create User',
+    'confirm_pass' => 'Confirm Password',
+    'email' => 'E-Mail Address',
+    'profile_pic' => 'Profile Picture',
+    'no_record_activities' => 'No Activities Found.',
+    'success' => 'Well Done!',
+    'error' => 'Something Went Wrong!',
+    'success_user' => 'Successful Creating a User.',
+    'error_user' => 'Please Try Creating New User later.',
+];
