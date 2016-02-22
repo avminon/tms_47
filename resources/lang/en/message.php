@@ -24,4 +24,5 @@ return [
     'error' => 'Something Went Wrong!',
     'success_user' => 'Successful Creating a User.',
     'error_user' => 'Please Try Creating New User later.',
+    'user_type' => 'User Type',
 ];

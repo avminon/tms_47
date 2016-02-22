@@ -26,13 +26,15 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/home', 'HomeController@index');
-    Route::group(['namespace' => 'Supervisor'], function () {
-        Route::resource('supervisor/users', 'UserController');
+    Route::auth();
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+        Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
+
+        Route::group(['namespace' => 'Supervisor'], function () {
+            Route::resource('supervisor/users', 'UserController');
+        });
     });
 });
