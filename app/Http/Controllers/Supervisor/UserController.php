@@ -13,11 +13,11 @@ use App\Repositories\UserRepositoryInterface as UserRepository;
 
 class UserController extends Controller
 {
-    protected $user;
+    protected $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
-        $this->user = $userRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -38,7 +38,7 @@ class UserController extends Controller
     public function create()
     {
         return view('supervisor.users.create', [
-            'userType' => $this->user->listUserType()
+            'userType' => $this->userRepository->listUserType()
         ]);
     }
 
@@ -52,16 +52,16 @@ class UserController extends Controller
     {
         try {
             $userData = $request->all();
-            $userData['avatar'] = $this->user->uploadImage($request);
+            $userData['avatar'] = $this->userRepository->uploadImage($request);
             $userData['password'] = bcrypt($request->password);
-            $this->user->create($userData);
+            $this->userRepository->create($userData);
             session()->flash('flash_message', trans('message.success_user'));
         } catch (Exception $e) {
             session()->flash('flash_error', trans('message.error_user'));
         }
 
         return view('supervisor.users.create',[
-            'userType' => $this->user->listUserType()
+            'userType' => $this->userRepository->listUserType()
         ]);
     }
 
