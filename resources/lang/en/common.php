@@ -29,8 +29,9 @@ return [
         'add' => 'Add',
         'edit' => 'Edit',
         'editTask' => 'Edit Task',
-        'successEdit' => 'Successfully edited',
-        'successDelete' => 'Successfully deleted',
+        'successEdit' => 'Successfully edited!',
+        'successDelete' => 'Successfully deleted!',
+        'successAdd' => 'Successfully added!',
         'submit' => 'Submit',
     ],
 ];
