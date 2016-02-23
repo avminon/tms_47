@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquents;
 
+use App\Models\Subject;
 use App\Models\Activity;
 use App\Models\UserSubject;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,15 @@ use App\Repositories\SubjectRepositoryInterface;
 
 class SubjectRepository extends Repository implements SubjectRepositoryInterface
 {
+
+    public function getConstStatus()
+    {
+        return [
+            'start' => UserSubject::STATUS_START,
+            'training' => UserSubject::STATUS_TRAINING,
+            'finish' => UserSubject::STATUS_FINISH,
+        ];
+    }
 
     public function getConstStatus()
     {

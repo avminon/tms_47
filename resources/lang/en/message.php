@@ -19,6 +19,7 @@ return [
     'trainee' => 'Trainee ',
     'create_user' => 'Create User',
     'create_subject' => 'Create Subject',
+    'success_subject' => 'Subject successfully created.',
     'list_of_subjects' => 'List of Subjects',
     'confirm_pass' => 'Confirm Password',
     'email' => 'E-Mail Address',
