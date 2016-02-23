@@ -33,8 +33,20 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+        Route::resourceParameters([
+            'users' => 'user',
+            'subjects' => 'subject',
+            'tasks' => 'task',
+            'courses' => 'course',
+        ]);
+
         Route::group(['namespace' => 'Supervisor'], function () {
-            Route::resource('supervisor/users', 'UserController');
+            Route::get('supervisor/home', 'HomeController@index');
+            Route::resource('supervisor/courses', 'CourseController');
+        });
+
+        Route::group(['namespace' => 'Trainee'], function () {
+            Route::resource('trainee/courses', 'CourseController', ['only' => ['index', 'show']]);
         });
     });
 });

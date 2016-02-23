@@ -1,0 +1,20 @@
+<?php
+return [
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'view' => 'View',
+    'new' => 'New',
+    'course' => 'Course',
+    'name' => 'Name',
+    'actions' => 'Actions',
+    'at' => 'At',
+    'description' => 'Description',
+    'created' => 'Created',
+    'updated' => 'Updated',
+    'status' => 'Status',
+    'status_start' => 'Start',
+    'status_training' => 'Training',
+    'status_finished' => 'Finished',
+];

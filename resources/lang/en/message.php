@@ -25,4 +25,11 @@ return [
     'success_user' => 'Successful Creating a User.',
     'error_user' => 'Please Try Creating New User later.',
     'user_type' => 'User Type',
+    'project_title' => 'TMS 47',
+    'home' => 'Home',
+    'login' => 'Login',
+    'logout' => 'Logout',
+    'register' => 'Register',
+    'toggle' => 'Toggle',
+    'navigation' => 'Navigation',
 ];

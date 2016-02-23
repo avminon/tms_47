@@ -14,6 +14,7 @@ class Course extends Model
     const STATUS_START = 1;
     const STATUS_TRAINING = 2;
     const STATUS_FINISHED = 3;
+    const COURSES_PER_PAGE = 20;
 
     public function users()
     {
@@ -23,5 +24,14 @@ class Course extends Model
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'course_subjects', 'course_id', 'subject_id');
+    }
+
+    public static function getStatusList()
+    {
+        return [
+            self::STATUS_START => trans('courses.status_start'),
+            self::STATUS_TRAINING => trans('courses.status_training'),
+            self::STATUS_FINISHED => trans('courses.status_finished'),
+        ];
     }
 }
