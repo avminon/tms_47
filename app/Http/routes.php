@@ -26,9 +26,13 @@ Route::get('/', function () {
 |
 */
 
+
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::group(['middleware' => 'auth'], function () {
+        Route::resourceParameters([
+            'users' => 'user'
+        ]);
         Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
         Route::resourceParameters([
@@ -41,9 +45,16 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('supervisor/home', 'HomeController@index');
             Route::resource('supervisor/courses', 'CourseController');
             Route::resource('supervisor/subjects', 'SubjectController');
+            Route::resource('supervisor/users', 'UserController');
         });
-
         Route::group(['namespace' => 'Trainee'], function () {
+            Route::resource('trainee/subjects', 'SubjectController', ['only' => ['index', 'show']]);
+            Route::match(
+                ['put', 'post'],
+                'trainee/user-tasks/',
+                ['as' => 'trainee.user-tasks.batchUpdate', 'uses' => 'UserTaskController@batchUpdate']
+            );
+            Route::resource('trainee/tasks', 'TaskController', ['only' => ['index', 'show', 'update']]);
             Route::resource('trainee/courses', 'CourseController', ['only' => ['index', 'show']]);
         });
         Route::group(['namespace' => 'Trainee'], function () {

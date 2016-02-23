@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests;
 use App\Models\UserTask;
+use App\Models\UserSubject;
 use App\Http\Controllers\Controller;
 
 class UserTaskController extends Controller
