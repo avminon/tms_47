@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateSubjectRequest;
+use App\Models\Subject;
 use App\Repositories\SubjectRepositoryInterface;
+use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
@@ -19,9 +21,7 @@ class SubjectController extends Controller
     {
         $subjects = $this->subjectRepository->getRowsPaginated();
 
-        return view('supervisor/subjects/list', [
-            'subjects' => $subjects,
-        ]);
+        return view('supervisor/subjects/index', ['subjects' => $subjects]);
     }
 
     public function store(CreateSubjectRequest $request)
@@ -37,10 +37,28 @@ class SubjectController extends Controller
 
         $subjects = $this->subjectRepository->getRowsPaginated();
 
-        return view('supervisor/subjects/index', [
-            'subjects' => $subjects,
-
-        ]);
+        return redirect('supervisor/subjects');
     }
 
+    public function edit(Subject $subject)
+    {
+        try {
+            return view('supervisor.subjects.edit', [
+                'subject' => $subject,
+                'user' => $this->user,
+            ]);
+        } catch (ModelNotFoundException $e) {
+            \Session::flash('flash_error', trans('message.error_subject_edit'));
+        }
+
+        return redirect('/supervisor/subjects');
+    }
+
+    public function update(Request $request, Subject $subject)
+    {
+        $subject->update($request->only(['name', 'description']));
+        return redirect('supervisor/subjects')->with([
+            'flash_message' => trans('message.success_subject_edit'),
+        ]);
+    }
 }
