@@ -95,6 +95,6 @@ class UserTasksTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
         ];
-        Task::insert($setData);
+        UserTask::insert($setData);
     }
 }

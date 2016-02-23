@@ -25,46 +25,6 @@ class UserSubjectsTableSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_id' => 1,
-                'course_id' => 1,
-                'subject_id' => 2,
-                'status' => UserSubject::STATUS_START,
-                'end_date' => Carbon::now(),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-
-            ],
-            [
-                'user_id' => 1,
-                'course_id' => 2,
-                'subject_id' => 1,
-                'status' => UserSubject::STATUS_START,
-                'end_date' => Carbon::now(),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-
-            ],
-            [
-                'user_id' => 1,
-                'course_id' => 2,
-                'subject_id' => 2,
-                'status' => UserSubject::STATUS_START,
-                'end_date' => Carbon::now(),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-
-            ],
-            [
-                'user_id' => 2,
-                'course_id' => 1,
-                'subject_id' => 1,
-                'status' => UserSubject::STATUS_START,
-                'end_date' => Carbon::now(),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-
-            ],
-            [
                 'user_id' => 2,
                 'course_id' => 1,
                 'subject_id' => 2,
@@ -76,7 +36,7 @@ class UserSubjectsTableSeeder extends Seeder
             ],
             [
                 'user_id' => 3,
-                'course_id' => 2,
+                'course_id' => 1,
                 'subject_id' => 1,
                 'status' => UserSubject::STATUS_START,
                 'end_date' => Carbon::now(),
@@ -85,8 +45,48 @@ class UserSubjectsTableSeeder extends Seeder
 
             ],
             [
-                'user_id' => 3,
-                'course_id' => 2,
+                'user_id' => 4,
+                'course_id' => 1,
+                'subject_id' => 2,
+                'status' => UserSubject::STATUS_START,
+                'end_date' => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
+            ],
+            [
+                'user_id' => 5,
+                'course_id' => 1,
+                'subject_id' => 1,
+                'status' => UserSubject::STATUS_START,
+                'end_date' => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
+            ],
+            [
+                'user_id' => 6,
+                'course_id' => 1,
+                'subject_id' => 2,
+                'status' => UserSubject::STATUS_START,
+                'end_date' => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
+            ],
+            [
+                'user_id' => 7,
+                'course_id' => 1,
+                'subject_id' => 1,
+                'status' => UserSubject::STATUS_START,
+                'end_date' => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
+            ],
+            [
+                'user_id' => 8,
+                'course_id' => 1,
                 'subject_id' => 2,
                 'status' => UserSubject::STATUS_START,
                 'end_date' => Carbon::now(),
@@ -95,6 +95,6 @@ class UserSubjectsTableSeeder extends Seeder
 
             ],
         ];
-        Subject::insert($setData);
+        UserSubject::insert($setData);
     }
 }
