@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateSubjectRequest;
 use App\Http\Requests;
 use App\Models\Subject;
+use App\Models\Course;
+use App\Models\Task;
 use App\Repositories\SubjectRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -18,31 +20,26 @@ class SubjectController extends Controller
         $this->subjectRepository = $subjectRepository;
     }
 
-    public function index()
-    {
-        $subjects = $this->subjectRepository->getRowsPaginated();
-        return view('supervisor.subjects.list', ['subjects' => $subjects]);
-    }
-
-    public function create()
-    {
-        return view('supervisor.subjects.create');
-    }
-
     public function show(Subject $subject)
     {
+        $tasks = $subject->tasks()->paginate(Task::TASKS_PER_PAGE);
+
+        $courses = $subject->course()->paginate(Course::COURSES_PER_PAGE);
+
         return view('supervisor.subjects.show', [
-            'subject' => $this->subjectRepository->findOrFail($subject->id),
-            'tasks' => $subject->tasks,
+            'subject' => $subject,
+            'tasks' => $tasks,
+            'courses' => $courses,
         ]);
     }
 
-    public function destroy($id)
+    public function index()
     {
-        $this->subjectRepository->delete($id);
-        return redirect()->back()->with('flash_message', trans('common.main.successDelete'));
+        $subjects = $this->subjectRepository->getRowsPaginated();
+        return view('supervisor.subjects.index', ['subjects' => $subjects]);
     }
 
+   
     public function store(CreateSubjectRequest $request)
     {
         try {
@@ -69,15 +66,12 @@ class SubjectController extends Controller
         }
 
         return redirect('/supervisor/subjects');
-        return view('supervisor.subjects.index', [
-            'subjects' => $subjects,
-        ]);
     }
 
     public function update(Request $request, Subject $subject)
     {
         $subject->update($request->only(['name', 'description']));
-        return redirect('supervisor/subjects')->with([
+        return redirect('supervisor/subjects', [
             'flash_message' => trans('message.success_subject_edit'),
         ]);
     }
@@ -89,6 +83,6 @@ class SubjectController extends Controller
             'flash_message',
             trans('message.success_subject_delete')
         );
-
     }
 }
+

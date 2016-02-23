@@ -53,5 +53,4 @@ abstract class Repository implements RepositoryInterface
     {
         return $this->model->paginate($numberOfPages, $columns, $pageNumber);
     }
-
 }
