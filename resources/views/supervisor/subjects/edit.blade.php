@@ -28,7 +28,7 @@
                                     !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::submit('Update', ['class' => 'btn btn-success']) !!}
+                                    {!! Form::submit(trans('message.form_update'), ['class' => 'btn btn-success']) !!}
                                 </div>
                             {!! Form::close() !!}
                         </div>

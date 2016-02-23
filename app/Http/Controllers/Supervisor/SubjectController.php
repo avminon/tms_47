@@ -35,8 +35,6 @@ class SubjectController extends Controller
             session()->flash('flash_error', trans('message.error_subject'));
         }
 
-        $subjects = $this->subjectRepository->getRowsPaginated();
-
         return redirect('supervisor/subjects');
     }
 
@@ -60,5 +58,15 @@ class SubjectController extends Controller
         return redirect('supervisor/subjects')->with([
             'flash_message' => trans('message.success_subject_edit'),
         ]);
+    }
+
+    public function destroy(Subject $subject)
+    {
+        $subject->delete();
+        return redirect()->back()->with(
+            'flash_message',
+            trans('message.success_subject_delete')
+        );
+
     }
 }

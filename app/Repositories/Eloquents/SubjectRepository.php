@@ -16,6 +16,15 @@ class SubjectRepository extends Repository implements SubjectRepositoryInterface
         return $this->model->paginate(Subject::SUBJECTS_PER_PAGE);
     }
 
+    public function getConstStatus()
+    {
+        return [
+            'start' => UserSubject::STATUS_START,
+            'training' => UserSubject::STATUS_TRAINING,
+            'finish' => UserSubject::STATUS_FINISH,
+        ];
+    }
+
     public function getSubjectTasks($id)
     {
         return $this->model->with('tasks')->findOrFail($id);
