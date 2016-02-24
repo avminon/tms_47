@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Session;
 use Exemption;
 use App\Http\Requests;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Repositories\UserRepositoryInterface as UserRepository;
@@ -27,7 +28,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $currentUser = auth()->user();
+        $courses = $currentUser->courses()->with(['subjects.tasks'])->get();
+        return view('supervisor.users.index', [
+            'user' => $currentUser,
+            'courses' => $courses,
+            'activities' => $currentUser->activities,
+        ]);
     }
 
     /**
@@ -71,9 +78,15 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        $user->userType = $user->isTrainee() ? trans('message.trainee') : trans('message.supervisor');
+        $courses = $user->courses()->with(['subjects.tasks'])->get();
+        return view('supervisor.users.show', [
+            'user' => $user,
+            'courses' => $courses,
+            'activities' => $user->activities,
+        ]);
     }
 
     /**

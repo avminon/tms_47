@@ -15,4 +15,6 @@ return [
     'confirm_pass' => 'Confirm Password',
     'email' => 'E-Mail Address',
     'profile_pic' => 'Profile Picture',
+    'user_information' => 'User Information',
+    'courses' => 'Courses',
 ];

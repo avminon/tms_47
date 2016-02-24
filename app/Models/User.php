@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return ($this->type == self::TYPE_SUPERVISOR);
     }
+
+    public function isTrainee()
+    {
+        return ($this->type == self::TYPE_TRAINEE);
+    }
 }
