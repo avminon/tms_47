@@ -1,24 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('common.main.login') }}</div>
-                <div class="panel-body">
-                    {{ Form::open([
-                            'action' => ['Auth\AuthController@login', null],
-                            'class' => 'form-horizontal',
-                            'role' => 'form',
-                        ])
-                    }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{{ trans('common.main.login') }}</div>
+                    <div class="panel-body">
+                        {{ Form::open([
+                                'action' => ['Auth\AuthController@login', null],
+                                'class' => 'form-horizontal',
+                                'role' => 'form',
+                            ])
+                        }}
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             {{ Form::label('email', trans('common.main.email'), ['class' => 'col-md-4 control-label']) }}
                             <div class="col-md-6">
                                 {{ Form::email('email', null, [
                                         'required' => 'required',
-                                        'placeholder' => trans('common.main.enterEmailHere'),
                                         'class' => 'form-control',
                                         'value' => old('email')
                                     ])
@@ -32,7 +31,6 @@
                                 {{
                                     Form::password('password', [
                                         'required' => 'required',
-                                        'placeholder' => trans('common.main.enterNameHere'),
                                         'class' => 'form-control'
                                     ])
                                 }}
@@ -66,10 +64,10 @@
                             </div>
                         </div>
 
-                    {{ Form::close() }}
+                        {{ Form::close() }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
