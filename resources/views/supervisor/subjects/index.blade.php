@@ -9,6 +9,22 @@
                         {{ trans('message.list_of_subjects') }}
                     </div>
                     <div class="panel-body">
+                        {{ Form::open(['route' => ['supervisor.subjects.store'], 'files' => false]) }}
+                            <div class="form-group">
+                                {{ Form::label('name', trans('message.create_subject')) }}<br/>
+                                {{ Form::label('name', trans('message.name')) }}
+                                {{ Form::text('name', null, ['class' => 'form-control']) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('description', trans('message.description')) }}
+                                {{ Form::textarea('description', null, ['class' => 'form-control']) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::submit(trans('message.save'), ['class' => 'btn btn-primary']) }}
+                            </div>
+                        {{ Form::close() }}
+                    </div>
+                    <div class="panel-body">
                     <table class="col-md-9">
                         <thead>
                             <tr>
