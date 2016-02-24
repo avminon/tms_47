@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Supervisor;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
 use App\Http\Requests;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
@@ -44,7 +45,8 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         return view('supervisor.courses.show')->with([
-            'course' => $course
+            'course' => $course,
+            'subjects' => $course->subjects,
         ]);
     }
 
@@ -68,5 +70,31 @@ class CourseController extends Controller
     {
         $course->delete();
         return redirect()->back()->with('flash_message', trans('successDelete'));
+    }
+
+    public function members(Request $request, Course $course)
+    {
+        return view('supervisor.courses.members')->with([
+            'tPage' => $request->tPage == 1 ?: $request->tPage, // Page variable for trainees pagination
+            'sPage' => $request->sPage == 1 ?: $request->sPage, // Page variable for supervisors pagination
+            'modalAddTitle' => trans('courses.add_member'),
+            'course' => $course,
+            'trainees' => $course->users()->trainees()->paginate(Course::MEMBERS_PER_PAGE, ['*'], 'tPage'),
+            'supervisors' => $course->users()->supervisors()->paginate(Course::MEMBERS_PER_PAGE, ['*'], 'sPage'),
+            'traineesNotInCourse' =>$course->getTraineesNotInCourse()->lists('name', 'id'),
+            'supervisorsNotInCourse' =>$course->getSupervisorsNotInCourse()->lists('name', 'id'),
+        ]);
+    }
+
+    public function deleteMember(Request $request, User $user)
+    {
+        $user->courses()->detach($request->course_id);
+        return redirect()->back()->with('flash_message', trans('common.main.successDelete'));
+    }
+
+    public function addMember(Request $request, Course $course)
+    {
+        User::findOrFail($request->user_id)->courses()->attach($course->id);
+        return redirect()->back()->with('flash_message', trans('common.main.successAdd'));
     }
 }

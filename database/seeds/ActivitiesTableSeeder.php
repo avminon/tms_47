@@ -15,11 +15,11 @@ class ActivitiesTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         for ($i = 0; $i <= 10; $i++) {
-            $activityData = [
-                'user_id' => 1,
+            $activityData[] = [
+                'user_id' => $i,
                 'description' => $faker->paragraph(1),
             ];
         }
-        Activity::create($activityData);
+        Activity::insert($activityData);
     }
 }

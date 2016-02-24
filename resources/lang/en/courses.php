@@ -17,4 +17,10 @@ return [
     'status_start' => 'Start',
     'status_training' => 'Training',
     'status_finished' => 'Finished',
+    'subjects' => 'Subjects',
+    'tab' => '&nbsp;&nbsp;&nbsp;&nbsp;',
+    'members' => 'Members',
+    'members_of' => 'Members of',
+    'add_member' => 'Add Member',
+    'remove_member' => 'Remove Member',
 ];

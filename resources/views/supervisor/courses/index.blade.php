@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <table class="table">
+                    <table class="table table-striped table-condensed">
                         <tbody>
                             <tr>
                                 <th>{{ trans('courses.course') . ' ' . trans('courses.name') }}</th>

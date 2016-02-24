@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return ($this->type == self::TYPE_TRAINEE);
     }
+
+    public function scopeTrainees($query)
+    {
+        return $query->where('type', self::TYPE_TRAINEE);
+    }
+
+    public function scopeSupervisors($query)
+    {
+        return $query->where('type', self::TYPE_SUPERVISOR);
+    }
 }
