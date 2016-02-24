@@ -9,7 +9,7 @@ use Exemption;
 use App\Http\Requests;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepositoryInterface as UserRepository;
 
 class UserController extends Controller
@@ -55,7 +55,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(UserRequest $request)
     {
         try {
             $userData = $request->all();
@@ -67,7 +67,7 @@ class UserController extends Controller
             session()->flash('flash_error', trans('message.error_user'));
         }
 
-        return view('supervisor.users.create',[
+        return view('supervisor.users.create', [
             'userType' => $this->userRepository->listUserType()
         ]);
     }
@@ -95,9 +95,10 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $userType = $this->userRepository->listUserType();
+        return view('supervisor.users.edit', compact(['userType', 'user']));
     }
 
     /**
@@ -107,9 +108,18 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        try {
+            if ($request->hasFile('image')) {
+                $user->avatar = $this->userRepository->uploadImage($request);
+            }
+            $user->update($request->all());
+            session()->flash('flash_message', trans('message.success_edit_user'));
+        } catch (Exception $e) {
+            session()->flash('flash_error', trans('message.error_edit_user'));
+        }
+        return redirect()->back();
     }
 
     /**
@@ -118,8 +128,15 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            session()->flash('flash_message',
+                trans('message.success_delete_user'));
+        } catch (Exception $e) {
+            session()->flash('flash_error', trans('message.error_delete_user'));
+        }
+        return redirect()->route('supervisor.users.index');
     }
 }
