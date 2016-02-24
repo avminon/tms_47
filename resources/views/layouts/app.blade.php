@@ -73,6 +73,30 @@
             </div>
         </div>
     </nav>
+    <div class="container">
+        <div class="panel-body">
+            @if(isset($errors) and $errors->any())
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @foreach($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
+            @if(session()->has('flash_message'))
+                <div class="alert alert-success  alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>{{ trans('message.success') }}</strong> {{ session()->get('flash_message') }}
+                </div>
+            @endif
+            @if(session()->has('flash_error'))
+                <div class="alert alert-success  alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>{{ trans('message.error') }}</strong> {{ session()->get('flash_error') }}
+                </div>
+            @endif
+        </div>
+    </div>
 
     @yield('content')
 

@@ -12,4 +12,15 @@ class UserSubject extends Model
 
     protected $dates = ['end_date'];
     protected $fillable = ['user_id', 'subject_id', 'course_id', 'status', 'end_date'];
+
+    public function scopeFindSubject($query, $userId, $subjectId)
+    {
+        return $query->where('subject_id', $subjectId)
+            ->where('user_id', $userId);
+    }
+
+    public static function isFinished($status)
+    {
+        return self::STATUS_FINISH == $status;
+    }
 }

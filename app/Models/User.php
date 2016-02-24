@@ -23,12 +23,14 @@ class User extends Authenticatable
 
     public function tasks()
     {
-        return $this->belongsToMany(Task::class, 'user_tasks', 'user_id', 'task_id');
+        return $this->belongsToMany(Task::class, 'user_tasks', 'user_id', 'task_id')
+            ->withPivot('course_id', 'subject_id', 'status', 'end_date');
     }
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'user_subjects', 'user_id', 'subject_id');
+        return $this->belongsToMany(Subject::class, 'user_subjects', 'user_id', 'subject_id')
+            ->withPivot('course_id', 'status', 'end_date');
     }
 
     public function courses()
