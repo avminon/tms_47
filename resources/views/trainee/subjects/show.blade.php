@@ -7,7 +7,7 @@
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="panel panel-info">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">{{ trans('message.basic_information') }}</div>
                             <div class="panel-body">
                                 <div class="row">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="panel panel-default">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">{{ trans('message.activity_log') }}</div>
                             <div class="panel-body">
                                 @if(!$activities->isEmpty())
@@ -61,7 +61,7 @@
             </div>
             <div class="col-md-9">
                 <div class="col-md-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">{{ $subject->name }}</div>
                         <div class="panel-body text-center">
                             {{ Form::open(['route' => ['trainee.user-tasks.batchUpdate', $subject->id], 'method' => 'post']) }}

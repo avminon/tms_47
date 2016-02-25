@@ -1,2 +1,6 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";// United 3.3.6
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
+.jumbotron {
+  color: #ffffff;
+  background-color: #DD4814;
+}

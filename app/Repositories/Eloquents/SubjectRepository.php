@@ -20,15 +20,6 @@ class SubjectRepository extends Repository implements SubjectRepositoryInterface
         ];
     }
 
-    public function getConstStatus()
-    {
-        return [
-            'start' => UserSubject::STATUS_START,
-            'training' => UserSubject::STATUS_TRAINING,
-            'finish' => UserSubject::STATUS_FINISH,
-        ];
-    }
-
     public function getSubjectTasks($id)
     {
         return $this->model->with('tasks')->findOrFail($id);
