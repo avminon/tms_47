@@ -12,8 +12,6 @@ class Task extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = ['description', 'subject_id'];
 
-    const TASKS_PER_PAGE = 20;
-
     public function subject()
     {
         return $this->belongsTo(Subject::class, 'subject_id');

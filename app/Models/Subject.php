@@ -36,10 +36,20 @@ class Subject extends Model
     {
         return $this->belongsToMany(
             User::class,
-	    'user_subjects',
+            'user_subjects',
             'subject_id',
             'user_id'
         );
+    }
+
+    public function courseSubjects()
+    {
+        return $this->hasMany(CourseSubject::class, 'subject_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 
     public function userSubjects()

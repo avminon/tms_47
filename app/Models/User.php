@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class, 'user_courses', 'user_id', 'course_id');
     }
 
+    public function userCourses()
+    {
+        return $this->hasMany(UserCourse::class, 'user_id');
+    }
+
     public function isSupervisor()
     {
         return ($this->type == self::TYPE_SUPERVISOR);
@@ -58,5 +63,10 @@ class User extends Authenticatable
     public function scopeSupervisors($query)
     {
         return $query->where('type', self::TYPE_SUPERVISOR);
+    }
+
+    public function scopeListTrainee($query, $userIds)
+    {
+        return $query->whereIn('id', $userIds);
     }
 }

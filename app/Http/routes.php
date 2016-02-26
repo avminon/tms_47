@@ -39,7 +39,6 @@ Route::group(['middleware' => 'web'], function () {
             'courses' => 'course',
         ]);
         Route::group(['namespace' => 'Supervisor'], function () {
-            Route::get('supervisor/home', 'HomeController@index');
             Route::resource('supervisor/courses', 'CourseController');
             Route::get('supervisor/courses/{course}/members',
                 ['as' => 'supervisor.courses.members', 'uses' => 'CourseController@members'
@@ -62,7 +61,6 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         Route::group(['namespace' => 'Trainee'], function () {
-            Route::get('trainee/home', 'HomeController@index');
             Route::resource('trainee/courses', 'CourseController', ['only' => ['index', 'show']]);
             Route::get('trainee/courses/{course}/members',
                 ['as' => 'trainee.courses.members', 'uses' => 'CourseController@members'
