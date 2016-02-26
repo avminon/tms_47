@@ -9,7 +9,7 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +24,7 @@ Route::get('/', function () {
 | it contains. The "web" middleware group is defined in your HTTP
 | kernel and includes session state, CSRF protection, and more.
 |
-*/
+ */
 
 
 Route::group(['middleware' => 'web'], function () {
@@ -44,20 +44,13 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['namespace' => 'Supervisor'], function () {
             Route::get('supervisor/home', 'HomeController@index');
             Route::resource('supervisor/courses', 'CourseController');
+            Route::resource('supervisor/tasks', 'TaskController');
             Route::resource('supervisor/subjects', 'SubjectController');
             Route::resource('supervisor/users', 'UserController');
         });
         Route::group(['namespace' => 'Trainee'], function () {
-            Route::resource('trainee/subjects', 'SubjectController', ['only' => ['index', 'show']]);
-            Route::match(
-                ['put', 'post'],
-                'trainee/user-tasks/',
-                ['as' => 'trainee.user-tasks.batchUpdate', 'uses' => 'UserTaskController@batchUpdate']
-            );
-            Route::resource('trainee/tasks', 'TaskController', ['only' => ['index', 'show', 'update']]);
+            Route::get('trainee/home', 'HomeController@index');
             Route::resource('trainee/courses', 'CourseController', ['only' => ['index', 'show']]);
-        });
-        Route::group(['namespace' => 'Trainee'], function () {
             Route::resource('trainee/subjects', 'SubjectController', ['only' => ['index', 'show']]);
             Route::match(
                 ['put', 'post'],

@@ -24,6 +24,7 @@ return [
         'trainee' => 'Trainee',
         'supervisor' => 'Supervisor',
         'subjects' => 'Subjects',
+        'description' => 'Description',
         'tasks' => 'Tasks',
         'addNewTask' => 'Add New Task',
         'add' => 'Add',
@@ -33,5 +34,9 @@ return [
         'successDelete' => 'Successfully deleted!',
         'successAdd' => 'Successfully added!',
         'submit' => 'Submit',
+        'enterDescriptionHere' => 'Enter description here',
+        'back' => 'Back',
+        'cancel' => 'Cancel',
+        'activities' => 'Activities',
     ],
 ];

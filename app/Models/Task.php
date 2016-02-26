@@ -11,6 +11,8 @@ class Task extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = ['description', 'subject_id'];
 
+    const TASKS_PER_PAGE = 20;
+
     public function subject()
     {
         return $this->belongsTo(Subject::class, 'subject_id');
@@ -18,7 +20,6 @@ class Task extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_tasks', 'task_id',
-            'user_id');
+        return $this->belongsToMany(User::class, 'user_tasks', 'task_id', 'user_id');
     }
 }

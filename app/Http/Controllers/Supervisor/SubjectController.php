@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateSubjectRequest;
+use App\Http\Requests;
 use App\Models\Subject;
 use App\Repositories\SubjectRepositoryInterface;
 use Illuminate\Http\Request;
@@ -20,8 +21,26 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = $this->subjectRepository->getRowsPaginated();
+        return view('supervisor.subjects.list', ['subjects' => $subjects]);
+    }
 
-        return view('supervisor/subjects/index', ['subjects' => $subjects]);
+    public function create()
+    {
+        return view('supervisor.subjects.create');
+    }
+
+    public function show(Subject $subject)
+    {
+        return view('supervisor.subjects.show', [
+            'subject' => $this->subjectRepository->findOrFail($subject->id),
+            'tasks' => $subject->tasks,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $this->subjectRepository->delete($id);
+        return redirect()->back()->with('flash_message', trans('common.main.successDelete'));
     }
 
     public function store(CreateSubjectRequest $request)
@@ -52,6 +71,9 @@ class SubjectController extends Controller
         }
 
         return redirect('/supervisor/subjects');
+        return view('supervisor.subjects.index', [
+            'subjects' => $subjects,
+        ]);
     }
 
     public function update(Request $request, Subject $subject)
