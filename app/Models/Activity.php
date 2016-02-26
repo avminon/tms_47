@@ -8,7 +8,7 @@ class Activity extends Model
 {
     protected $guarded = [];
 
-    protected $fillable = ['user_id', 'description', 'type'];
+    protected $fillable = ['user_id', 'description', 'type', 'subject_id', 'course_id'];
 
     public function user()
     {

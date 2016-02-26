@@ -12,6 +12,12 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-sm-6 text-right">
+                                        {{ trans('common.main.course') }}
+                                    </div>
+                                    <div class="col-sm-6 text-left">
+                                        {{ $subject->course()->first()->name }}
+                                    </div>
+                                    <div class="col-sm-6 text-right">
                                         {{ trans('message.start_date') }}
                                     </div>
                                     <div class="col-sm-6 text-left">
@@ -45,11 +51,10 @@
                             <div class="panel-body">
                                 @if(!$activities->isEmpty())
                                     @foreach($activities as $activity)
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                {{ $activity->description }}
-                                            </div>
-                                        </div>
+                                        <li class="list-group-item col-md-12">
+                                            {{ $activity->description }} <br />
+                                            <i>({{ $activity->created_at->diffForHumans() }})</i>
+                                        </li>
                                     @endforeach
                                 @else
                                     {{ trans('message.no_record_activities') }}
@@ -64,12 +69,13 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">{{ $subject->name }}</div>
                         <div class="panel-body text-center">
-                            {{ Form::open(['route' => ['trainee.user-tasks.batchUpdate', $subject->id], 'method' => 'post']) }}
+                            {{ Form::open(['route' => ['trainee.user-tasks.batchUpdate', $subject->id,], 'method' => 'post']) }}
+                                {{ Form::hidden('subject_id', $subject->id) }}
                                 @if($tasks->isEmpty())
                                     {{ trans('message.no_record_activities') }}
                                 @else
                                     @foreach($tasks as $task)
-                                        @if($task->pivot->status == $statusFinish)
+                                        @if($task->pivot->status == \App\Models\UserTask::STATUS_FINISH)
                                             <div class="col-sm-3">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading text-left">

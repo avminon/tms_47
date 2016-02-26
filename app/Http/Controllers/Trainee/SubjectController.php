@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Trainee;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Subject;
-use App\Models\UserTask;
 use App\Models\UserSubject;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\UserTask;
 use App\Repositories\SubjectRepositoryInterface as SubjectRepository;
+use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
@@ -16,6 +16,7 @@ class SubjectController extends Controller
 
     public function __construct(SubjectRepository $subjectRepository)
     {
+        parent::__construct();
         $this->subjectRepository = $subjectRepository;
     }
 
@@ -37,17 +38,15 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        $currentUser = auth()->user();
-        $tasks = $currentUser->tasks()->where('tasks.subject_id', $subject->id)->get();
-        $activities = $currentUser->activities()->where('subject_id', $subject->id)->get();
-        $userSubject = $currentUser->subjects()->where('subject_id', $subject->id)->first();
+        $tasks = $this->user->tasks()->where('tasks.subject_id', $subject->id)->get();
+	    
+        $userSubject = $this->user->subjects()->where('subject_id', $subject->id)->first();
         return view('trainee.subjects.show', [
-            'activities' => $activities,
+            'activities' => $activities->where('subject_id', $subject->id)->orderBy('id', 'desc')->get(),
             'userSubject' => $userSubject,
             'subject' => $subject,
             'tasks' => $tasks,
             'isFinish' => UserSubject::isFinished($userSubject->pivot->status),
-            'statusFinish' => UserTask::STATUS_FINISH,
         ]);
     }
 }
