@@ -15,6 +15,8 @@ class User extends Authenticatable
 
     const TYPE_TRAINEE = 1;
     const TYPE_SUPERVISOR = 2;
+    const USERS_PER_PAGE = 10;
+    const ACTIVITIES_PER_PAGE = 5;
 
     public function activities()
     {

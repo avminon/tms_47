@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Supervisor;
 
-use Illuminate\Http\Request;
-
-use Session;
-use Exemption;
-use App\Http\Requests;
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UserRequest;
+use App\Models\Course;
 use App\Models\User;
+use App\Models\UserSubject;
+use App\Models\UserTask;
 use App\Repositories\UserRepositoryInterface as UserRepository;
+use Exemption;
+use Illuminate\Http\Request;
+use Session;
 
 class UserController extends Controller
 {
@@ -31,11 +31,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        $courses = $this->user->courses()->with(['subjects.tasks'])->get();
+        $trainees = User::trainees()->paginate(User::USERS_PER_PAGE);
+        foreach ($trainees as $trainee) {
+            $course = $trainee->courses->last();
+            $trainee->course = (is_null($course)) ? trans('common.main.noCourse') : $course->name;
+        }
         return view('supervisor.users.index', [
-            'user' => $this->user,
-            'courses' => $courses,
-            'activities' => $this->user->activities,
+            'trainees' => $trainees,
+            'supervisors' => User::supervisors()->get(),
+            'currentUser' => $this->user,
         ]);
     }
 
@@ -47,7 +51,7 @@ class UserController extends Controller
     public function create()
     {
         return view('supervisor.users.create', [
-            'userType' => $this->userRepository->listUserType()
+            'userType' => $this->userRepository->listUserType(),
         ]);
     }
 
@@ -70,7 +74,7 @@ class UserController extends Controller
         }
 
         return view('supervisor.users.create', [
-            'userType' => $this->userRepository->listUserType()
+            'userType' => $this->userRepository->listUserType(),
         ]);
     }
 
@@ -83,11 +87,28 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->userType = $user->isTrainee() ? trans('message.trainee') : trans('message.supervisor');
-        $courses = $user->courses()->with(['subjects.tasks'])->get();
+        $courses = $user->courses()->get();
+
+        foreach ($courses as $course) {
+            $course->status = $this->setStatus($course->status);
+
+            foreach ($course->subjects as $subject) {
+                $userSubject = $subject->userSubjects->first();
+                $subject->status = is_null($userSubject) ? UserSubject::STATUS_START : $userSubject->status;
+                $subject->status = $this->setStatus($subject->status);
+
+                foreach ($subject->tasks as $task) {
+                    $userTask = $task->userTasks->first();
+                    $task->status = is_null($userTask) ? UserTask::STATUS_START : $userTask->status;
+                    $task->status = $this->setStatus($task->status);
+                }
+            }
+        }
+
         return view('supervisor.users.show', [
             'user' => $user,
             'courses' => $courses,
-            'activities' => $user->activities,
+            'activities' => $user->activities->take(User::ACTIVITIES_PER_PAGE),
         ]);
     }
 
@@ -148,5 +169,25 @@ class UserController extends Controller
             'activities' => $user->activities,
             'user' => $user,
         ]);
+    }
+
+    public function setStatus($status)
+    {
+        switch ($status) {
+            case UserSubject::STATUS_START:
+                $status = trans('common.main.start');
+                break;
+            case UserSubject::STATUS_TRAINING:
+                $status = trans('common.main.training');
+                break;
+            case UserSubject::STATUS_FINISH:
+                $status = trans('common.main.finish');
+                break;
+            default:
+                $status = trans('common.main.start');
+                break;
+        }
+
+        return $status;
     }
 }

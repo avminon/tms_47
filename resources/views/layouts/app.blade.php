@@ -20,26 +20,32 @@
             <div class="container">
                 <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">{{ trans('common.main.toggleNav') }}</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">{{ trans('common.main.toggleNav') }}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ trans('common.main.framgia') }}
-                    </a>
-                </div>
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ trans('common.main.framgia') }}
+                </a>
+            </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/home') }}">{{ trans('common.main.home') }}</a></li>
-                    </ul>
-
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/home') }}">{{ trans('common.main.home') }}</a></li>
+                        @if (Auth::user()->isSupervisor())
+                            <li>{{ link_to_route('supervisor.courses.index', trans('common.main.courses')) }}</li>
+                            <li>{{ link_to_route('supervisor.subjects.index', trans('common.main.subjects')) }}</li>
+                            <li>{{ link_to_route('supervisor.users.index', trans('common.main.users')) }}</li>
+                        @else
+                            <li>{{ link_to_route('trainee.courses.index', trans('common.main.courses')) }}</li>
+                        @endif
+                </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -60,7 +66,7 @@
             </div>
         </nav>
     @else
-        <div class="jumbotron"><h1>Framgia Training Management System</h1></div>
+        <div class="jumbotron"><h1>{{ trans('common.main.page_title') }}</h1></div>
     @endif
     <div class="container">
         <div class="panel-body">

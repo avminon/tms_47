@@ -7,31 +7,42 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">{{ trans('message.edit_user') }}</div>
                     <div class="panel-body">
-                        {{ Form::open(['method' => 'PUT', 'route' => ['supervisor.users.update', $user->id], 'files' => true]) }}
-                            <div class="form-group">
-                                {{ Form::label('name', trans('message.name')) }}
-                                {{ Form::text('name', $user->name, ['class' => 'form-control']) }}
+                        {{ Form::open(['method' => 'PUT', 'route' => [
+                                'supervisor.users.update', $user->id], 'files' => true
+                            ])
+                        }}
+                        <div class="form-group">
+                            {{ Form::label('name', trans('message.name')) }}
+                            {{ Form::text('name', $user->name, ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('email', trans('message.email')) }}
+                            {{ Form::text('email', $user->email, ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('type', trans('message.user_type')) }}
+                            {{ Form::select('type', $userType, ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('image', trans('message.profile_pic')) }}
+                            {{ Form::file('image') }}
+                        </div>
+                        <div class="col-md-2">
+                            {!! link_to(URL::previous(), trans('common.main.back'),
+                                ['class' => 'btn btn-warning btn-block'])
+                            !!}
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                {{ Form::submit(trans('message.save'), ['class' => 'btn btn-block btn-primary']) }}
                             </div>
-                            <div class="form-group">
-                                {{ Form::label('email', trans('message.email')) }}
-                                {{ Form::text('email', $user->email, ['class' => 'form-control']) }}
-                            </div>
-                            <div class="form-group">
-                                {{ Form::label('type', trans('message.user_type')) }}
-                                {{ Form::select('type', $userType, ['class' => 'form-control']) }}
-                            </div>
-                            <div class="form-group">
-                                {{ Form::label('image', trans('message.profile_pic')) }}
-                                {{ Form::file('image') }}
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                    {{ Form::submit(trans('message.save'), ['class' => 'btn btn-block btn-primary']) }}
-                                </div>
-                            </div>
+                        </div>
                         {{ Form::close() }}
                         <div class="col-md-2">
-                            {{ Form::open(['method' => 'DELETE', 'route' => ['supervisor.users.destroy', $user->id]]) }}
+                            {{ Form::open(['method' => 'DELETE', 'route' => [
+                                    'supervisor.users.destroy', $user->id
+                                ]])
+                            }}
                                 {{ Form::submit(trans('message.delete'), ['class' => 'btn btn-block btn-danger']) }}
                             {{ Form::close() }}
                         </div>
