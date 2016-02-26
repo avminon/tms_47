@@ -9,7 +9,9 @@ use Exemption;
 use App\Http\Requests;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests;
+use App\Http\Requests\CreateUserRequest;
+use App\Models\User;
 use App\Repositories\UserRepositoryInterface as UserRepository;
 
 class UserController extends Controller
@@ -18,6 +20,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $userRepository)
     {
+        parent::__construct();
         $this->userRepository = $userRepository;
     }
 
@@ -28,12 +31,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $currentUser = auth()->user();
-        $courses = $currentUser->courses()->with(['subjects.tasks'])->get();
+        $courses = $this->user->courses()->with(['subjects.tasks'])->get();
         return view('supervisor.users.index', [
-            'user' => $currentUser,
+            'user' => $this->user,
             'courses' => $courses,
-            'activities' => $currentUser->activities,
+            'activities' => $this->user->activities,
         ]);
     }
 
@@ -138,5 +140,13 @@ class UserController extends Controller
             session()->flash('flash_error', trans('message.error_delete_user'));
         }
         return redirect()->route('supervisor.users.index');
+    }
+
+    public function listActivities(User $user)
+    {
+        return view('supervisor.activities.list', [
+            'activities' => $user->activities,
+            'user' => $user,
+        ]);
     }
 }
