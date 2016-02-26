@@ -11,13 +11,9 @@ use App\Repositories\SubjectRepositoryInterface;
 class SubjectRepository extends Repository implements SubjectRepositoryInterface
 {
 
-    public function getConstStatus()
+    public function getRowsPaginated()
     {
-        return [
-            'start' => UserSubject::STATUS_START,
-            'training' => UserSubject::STATUS_TRAINING,
-            'finish' => UserSubject::STATUS_FINISH,
-        ];
+        return $this->model->paginate(Subject::SUBJECTS_PER_PAGE);
     }
 
     public function getSubjectTasks($id)

@@ -9,7 +9,7 @@
                         {{ trans('message.list_of_subjects') }}
                     </div>
                     <div class="panel-body">
-                        {{ Form::open(['route' => ['supervisor.subjects.store'], 'files' => false]) }}
+                        {{ Form::open(['route' => ['supervisor.subjects.store']]) }}
                             <div class="form-group">
                                 {{ Form::label('name', trans('message.create_subject')) }}<br/>
                                 {{ Form::label('name', trans('message.name')) }}
