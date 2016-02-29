@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
-    const TASKS_PER_PAGE = 15;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable = ['description', 'subject_id'];

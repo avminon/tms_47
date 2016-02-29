@@ -85,4 +85,3 @@ class SubjectController extends Controller
         );
     }
 }
-

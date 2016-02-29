@@ -38,14 +38,13 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        $tasks = $this->user->tasks()->where('tasks.subject_id', $subject->id)->get();
-	    
         $userSubject = $this->user->subjects()->where('subject_id', $subject->id)->first();
+
         return view('trainee.subjects.show', [
-            'activities' => $activities->where('subject_id', $subject->id)->orderBy('id', 'desc')->get(),
+            'activities' => $this->user->activities()->where('subject_id', $subject->id)->orderBy('id', 'desc')->get(),
             'userSubject' => $userSubject,
             'subject' => $subject,
-            'tasks' => $tasks,
+            'tasks' => $this->user->tasks()->where('tasks.subject_id', $subject->id)->get(),
             'isFinish' => UserSubject::isFinished($userSubject->pivot->status),
         ]);
     }

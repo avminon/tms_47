@@ -28,7 +28,14 @@
                                     !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::submit(trans('message.form_update'), ['class' => 'btn btn-success']) !!}
+                                    {!! Form::button('<i class="fa fa-save"></i>', [
+                                            'class' => 'btn btn-success',
+                                            'type' => 'submit'
+                                        ])
+                                    !!}
+                                    {!! link_to(URL::previous(), trans('common.main.cancel'),
+                                        ['class' => 'btn btn-danger'])
+                                    !!}
                                 </div>
                             {!! Form::close() !!}
                         </div>
