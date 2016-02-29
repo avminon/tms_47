@@ -24,7 +24,9 @@
                                 @endforeach
                                 </ul>
                             </div>
-                            {{ link_to('supervisor/home', trans('common.main.back'), ['class' => 'btn btn-primary']) }}
+                            {!! link_to(URL::previous(), trans('common.main.back'),
+                                ['class' => 'btn btn-danger'])
+                            !!}
                         </div>
                     </div>
                 </div>

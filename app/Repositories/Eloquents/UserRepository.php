@@ -8,10 +8,11 @@ use App\Repositories\UserRepositoryInterface;
 
 class UserRepository extends Repository implements UserRepositoryInterface
 {
-    public function listUserType(){
+    public function listUserType()
+    {
         $userType = [
             User::TYPE_TRAINEE => trans('message.trainee'),
-            User::TYPE_SUPERVISOR => trans('message.supervisor')
+            User::TYPE_SUPERVISOR => trans('message.supervisor'),
         ];
         return $userType;
     }
@@ -19,7 +20,7 @@ class UserRepository extends Repository implements UserRepositoryInterface
     public function uploadImage($request)
     {
         $path = config('file.image.root_path');
-        if ( $request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = $path . date('YmdHisu') . $file->getClientOriginalName();
             move_uploaded_file($file, $filename);

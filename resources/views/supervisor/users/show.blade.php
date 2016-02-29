@@ -9,7 +9,12 @@
                         <div class="panel panel-body">
                             <div class="row">
                                 <div class="col-md-12 text-left">
-                                    <h4>{{ trans('labels.user_information') }}</h4>
+                                    <h4>{{ trans('labels.user_information') }}
+                                    {!! Html::decode(link_to_route('supervisor.users.edit',
+                                        '<i class="fa fa-btn fa-pencil"></i>',
+                                        $user->id, ['class' => 'btn btn-primary btn-xs']))
+                                    !!}
+                                    </h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -50,25 +55,40 @@
                                         <div class="panel panel-success">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#subjects{{ $course->id }}">{{ $course->name }}</a>
+                                                    <a data-toggle="collapse" href="#subjects{{ $course->id }}">
+                                                        {{ $course->name }}
+                                                        <span class="badge pull-right">
+                                                            {{ $course->status }}
+                                                        </span>
+                                                    </a>
                                                 </h4>
                                             </div>
                                             <div id="subjects{{ $course->id }}" class="panel-collapse collapse">
                                                 @foreach($course->subjects as $subject)
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">
-                                                            <h4 class="panel-title">
-                                                                <a data-toggle="collapse" href="#tasks{{ $subject->id }}">{{ $subject->name }}</a>
-                                                            </h4>
-                                                        </div>
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" href="#tasks{{ $subject->id }}">
+                                                                {{ $subject->name }}
+                                                                <span class="badge pull-right">
+                                                                    {{ $subject->status }}
+                                                                </span>
+                                                            </a>
+                                                        </h4>
                                                     </div>
-                                                    <div id="tasks{{ $subject->id }}" class="panel-collapse collapse">
-                                                        <ul class="list-group">
-                                                            @foreach($subject->tasks as $task)
-                                                                <li class="list-group-item">{{ $task->description }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                                </div>
+                                                <div id="tasks{{ $subject->id }}" class="panel-collapse collapse">
+                                                    <ul class="list-group">
+                                                        @foreach($subject->tasks as $task)
+                                                            <li class="list-group-item">
+                                                                {{ $task->description }}
+                                                                <span class="badge pull-right">
+                                                                    {{ $task->status }}
+                                                                </span>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -91,13 +111,18 @@
                         @if($activities->isEmpty())
                             {{ trans('message.no_record_activities') }}
                         @else
+                            <ul class="list-group">
                             @foreach($activities as $activity)
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        {{ $activity->description }}
-                                    </div>
-                                </div>
+                                <li class="list-group-item">
+                                    {{ $activity->description }} <br />
+                                    <i>({{ $activity->created_at->diffForHumans() }})</i>
+                                </li>
                             @endforeach
+                            </ul>
+                            {!! Html::decode(link_to_route('supervisor.activities.list',
+                                '<i class="fa fa-btn fa-search"></i> ' . trans('common.main.viewAll'),
+                                $user->id, ['class' => 'btn btn-primary btn-block']))
+                            !!}
                         @endif
                     </div>
                 </div>

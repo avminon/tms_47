@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Supervisor;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
