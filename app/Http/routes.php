@@ -9,7 +9,7 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
- */
+*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,14 +24,12 @@ Route::get('/', function () {
 | it contains. The "web" middleware group is defined in your HTTP
 | kernel and includes session state, CSRF protection, and more.
 |
- */
+*/
+
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::group(['middleware' => 'auth'], function () {
-        Route::resourceParameters([
-            'users' => 'user'
-        ]);
         Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
         Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
         Route::resourceParameters([
@@ -43,6 +41,17 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['namespace' => 'Supervisor'], function () {
             Route::get('supervisor/home', 'HomeController@index');
             Route::resource('supervisor/courses', 'CourseController');
+            Route::get('supervisor/courses/{course}/members',
+                ['as' => 'supervisor.courses.members', 'uses' => 'CourseController@members'
+            ]);
+            Route::post(
+                'supervisor/courses/{course}/addMember',
+                ['as' => 'supervisor.courses.addMember', 'uses' => 'CourseController@addMember']
+            );
+            Route::delete(
+                'supervisor/courses/{user}/deleteMember',
+                ['as' => 'supervisor.courses.deleteMember', 'uses' => 'CourseController@deleteMember']
+            );
             Route::resource('supervisor/tasks', 'TaskController');
             Route::get('supervisor/users/{user}/activities', [
                 'as' => 'supervisor.activities.list',
@@ -55,18 +64,21 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['namespace' => 'Trainee'], function () {
             Route::get('trainee/home', 'HomeController@index');
             Route::resource('trainee/courses', 'CourseController', ['only' => ['index', 'show']]);
+            Route::get('trainee/courses/{course}/members',
+                ['as' => 'trainee.courses.members', 'uses' => 'CourseController@members'
+            ]);
             Route::resource('trainee/subjects', 'SubjectController', ['only' => ['index', 'show']]);
             Route::resource('trainee/users', 'UserController');
             Route::get('trainee/users/{user}/activities', [
                 'as' => 'trainee.activities.list',
                 'uses' => 'UserController@listActivities',
             ]);
-	    Route::match(
+            Route::match(
                 ['put', 'post'],
                 'trainee/user-tasks/',
                 ['as' => 'trainee.user-tasks.batchUpdate', 'uses' => 'UserTaskController@batchUpdate']
             );
-	    Route::resource('trainee/tasks', 'TaskController', ['only' => ['index', 'show', 'update']]);
+            Route::resource('trainee/tasks', 'TaskController', ['only' => ['index', 'show', 'update']]);
 
         });
     });

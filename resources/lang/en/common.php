@@ -23,6 +23,8 @@ return [
         'sendPasswordResetLink' => 'Send Password Reset Link',
         'trainee' => 'Trainee',
         'supervisor' => 'Supervisor',
+        'trainees' => 'Trainees',
+        'supervisors' => 'Supervisors',
         'subjects' => 'Subjects',
         'description' => 'Description',
         'tasks' => 'Tasks',
@@ -38,5 +40,8 @@ return [
         'back' => 'Back',
         'cancel' => 'Cancel',
         'activities' => 'Activities',
+        'select' => 'Select',
+        'view' => 'View',
+        'close' => 'Close',
     ],
 ];
