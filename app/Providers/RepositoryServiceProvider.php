@@ -34,6 +34,6 @@ class RepositoryServiceProvider extends ServiceProvider
         });
         $this->app->bind('App\Repositories\CourseRepositoryInterface', function () {
             return new \App\Repositories\Eloquents\CourseRepository(\App\Models\Course::class);
-	});
+        });
     }
 }

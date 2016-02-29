@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
+    const TASKS_PER_PAGE = 15;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable = ['description', 'subject_id'];
@@ -20,7 +21,12 @@ class Task extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_tasks', 'task_id', 'user_id');
+        return $this->belongsToMany(
+            User::class,
+            'user_tasks',
+            'task_id',
+            'user_id'
+        );
     }
 
     public function userTasks()
