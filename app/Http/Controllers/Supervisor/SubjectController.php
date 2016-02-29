@@ -20,26 +20,26 @@ class SubjectController extends Controller
         $this->subjectRepository = $subjectRepository;
     }
 
-    public function show(Subject $subject)
-    {
-        $tasks = $subject->tasks()->paginate(Task::TASKS_PER_PAGE);
-
-        $courses = $subject->course()->paginate(Course::COURSES_PER_PAGE);
-
-        return view('supervisor.subjects.show', [
-            'subject' => $subject,
-            'tasks' => $tasks,
-            'courses' => $courses,
-        ]);
-    }
-
     public function index()
     {
         $subjects = $this->subjectRepository->getRowsPaginated();
-        return view('supervisor.subjects.index', ['subjects' => $subjects]);
+        return view('supervisor.subjects.list', ['subjects' => $subjects]);
     }
 
-   
+    public function create()
+    {
+        return view('supervisor.subjects.create');
+    }
+
+    public function show(Subject $subject)
+    {
+        return view('supervisor.subjects.show', [
+            'subject' => $subject,
+            'tasks' => $subject->tasks()->paginate(Task::TASKS_PER_PAGE),
+            'courses' => $subject->course()->paginate(Course::COURSES_PER_PAGE),
+        ]);
+    }
+
     public function store(CreateSubjectRequest $request)
     {
         try {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Trainee;
 
-use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Course;
-use App\Http\Controllers\Controller;
+use App\Models\UserSubject;
 use App\Repositories\CourseRepositoryInterface;
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
@@ -15,6 +15,7 @@ class CourseController extends Controller
 
     public function __construct(CourseRepositoryInterface $courseRepository)
     {
+        parent::__construct();
         $this->courseRepository = $courseRepository;
     }
 
@@ -28,9 +29,15 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
+        $activities = $this->user->activities()
+            ->where('course_id', $course->id)
+            ->orderBy('id', 'desc')
+            ->get();
+
         return view('trainee.courses.show')->with([
             'course' => $course,
             'subjects' => $course->subjects,
+            'activities' => $activities,
         ]);
     }
 
