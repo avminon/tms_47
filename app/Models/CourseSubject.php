@@ -10,4 +10,9 @@ class CourseSubject extends Model
     use SoftDeletes;
     protected $fillable = ['course_id', 'subject_id'];
     protected $dates = ['deleted_at'];
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
 }

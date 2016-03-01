@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
+use App\Models\Task;
 use App\Models\User;
+use App\Http\Requests;
+use App\Models\Course;
+use App\Models\Subject;
+use App\Models\Activity;
+use App\Models\UserCourse;
 use Illuminate\Http\Request;
+use App\Models\CourseSubject;
+use App\Http\Controllers\Controller;
+use App\Repositories\SubjectRepositoryInterface as SubjectRepository;
 
 class HomeController extends Controller
 {
@@ -13,9 +21,12 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected $subjectRepository;
+
+    public function __construct(SubjectRepository $subjectRepository)
     {
         parent::__construct();
+        $this->subjectRepository = $subjectRepository;
     }
 
     /**
@@ -25,7 +36,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $view = ($this->user->isSupervisor()) ? 'supervisor/home' : 'trainee/home';
-        return view($view);
+        $courses = $this->user->courses;
+        $courseIds = $courses->lists('id');
+        $userCourses = UserCourse::byCourseIds($courseIds)->with('user')->get();
+        $usersIds = $userCourses->pluck('user_id');
+        $subjects = CourseSubject::whereIn('course_id', $courseIds)->with('subject')->get();
+        $computedSubjects = $this->subjectRepository->computePercentage($subjects);
+        if ($this->user->isSupervisor()) {
+            return view('supervisor.home', [
+                'computedSubjects' => $computedSubjects,
+                'activities' => Activity::whereIn('user_id', $usersIds)->with('user')->paginate(Activity::ACTIVITY_PER_PAGE),
+                'courses' => $courses,
+                'subjects' => $subjects,
+                'tasks' => Task::whereIn('subject_id', $subjects->pluck('subject_id'))->get(),
+                'users' => User::listTrainee($usersIds)->trainees()->get(),
+            ]);
+        } else {
+            return view('trainee.home');
+        }
     }
 }
