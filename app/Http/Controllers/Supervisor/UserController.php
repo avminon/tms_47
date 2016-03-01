@@ -12,6 +12,7 @@ use App\Models\UserTask;
 use App\Repositories\UserRepositoryInterface as UserRepository;
 use Exemption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Session;
 
 class UserController extends Controller
@@ -31,14 +32,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $trainees = User::trainees()->paginate(User::USERS_PER_PAGE);
+        $trainees = User::trainees()
+            ->paginate(User::USERS_PER_PAGE, ['*'], strtolower(trans('common.main.trainees')));
+        $supervisors = User::supervisors()
+            ->paginate(User::USERS_PER_PAGE, ['*'], strtolower(trans('common.main.supervisors')));
+
         foreach ($trainees as $trainee) {
             $course = $trainee->courses->last();
             $trainee->course = (is_null($course)) ? trans('common.main.noCourse') : $course->name;
         }
         return view('supervisor.users.index', [
-            'trainees' => $trainees,
-            'supervisors' => User::supervisors()->get(),
+            'trainees' => $trainees->appends(Input::except(array(strtolower(trans('common.main.trainees'))))),
+            'supervisors' => $supervisors->appends(Input::except(array(strtolower(trans('common.main.supervisors'))))),
             'currentUser' => $this->user,
         ]);
     }

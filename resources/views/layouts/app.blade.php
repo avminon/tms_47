@@ -20,32 +20,33 @@
             <div class="container">
                 <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">{{ trans('common.main.toggleNav') }}</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">{{ trans('common.main.toggleNav') }}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ trans('common.main.framgia') }}
-                    </a>
-                </div>
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ trans('common.main.framgia') }}
+                </a>
+            </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/home') }}">{{ trans('common.main.home') }}</a></li>
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/home') }}">{{ trans('common.main.home') }}</a></li>
                         @if (Auth::user()->isSupervisor())
                             <li>{{ link_to_route('supervisor.courses.index', trans('common.main.courses')) }}</li>
                             <li>{{ link_to_route('supervisor.subjects.index', trans('common.main.subjects')) }}</li>
                             <li>{{ link_to_route('supervisor.users.index', trans('common.main.users')) }}</li>
                         @else
                             <li>{{ link_to_route('trainee.courses.index', trans('common.main.courses')) }}</li>
+                            <li>{{ link_to_route('trainee.users.index', trans('common.main.myProfile')) }}</li>
                         @endif
-                    </ul>
+                </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -54,9 +55,16 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="{{ url('supervisor/users/') }}">
-                                        <i class="fa fa-user fa-fw"></i>{{ Auth::user()->name }}
-                                    </a>
+                                    @if (Auth::user()->isSupervisor())
+                                        <a href="{{ url('supervisor/users/' . Auth::user()->id) }}">
+                                            <i class="fa fa-user fa-fw"></i>{{ Auth::user()->name }}
+                                        </a>
+                                    @else
+                                        <a href="{{ url('trainee/users/') }}">
+                                            <i class="fa fa-user fa-fw"></i>{{ Auth::user()->name }}
+                                        </a>
+                                    @endif
+
                                 </li>
                                 <li>
                                     <a href="{{ url('/logout') }}">

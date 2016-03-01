@@ -9,9 +9,9 @@
                         {{ trans('common.main.users') }}
                     </div>
                     <div class="panel-body">
-                        {!! Html::decode(link_to_route('supervisor.users.show',
-                            '<i class="fa fa-btn fa-search"></i> ' . trans('common.main.myProfile'),
-                            $currentUser->id, ['class' => 'btn btn-success btn-xs']))
+                        {!! Html::decode(link_to_route('supervisor.users.create',
+                            '<i class="fa fa-btn fa-plus"></i> ' . trans('message.create_user'),
+                            '', ['class' => 'btn btn-success btn-xs']))
                         !!}
                     </div>
                     <div class="panel-body">
@@ -20,6 +20,9 @@
                             <tr>
                                 <th class="col-md-2 text-left" colspan="1">
                                     {{ trans('common.main.supervisors') }}
+                                </th>
+                                <th class="col-md-10 text-right" colspan="3">
+                                    {!! $supervisors->render() !!}
                                 </th>
                             </tr>
                             <tr>
@@ -60,7 +63,7 @@
                                     {{ trans('common.main.trainees') }}
                                 </th>
                                 <th class="col-md-10 text-right" colspan="3">
-                                    {!! $trainees->render()!!}
+                                    {!! $trainees->render() !!}
                                 </th>
                             </tr>
                             <tr>
